@@ -26,10 +26,10 @@ public class SmokeTest extends TcConstants{
 	final static Logger logger = Logger.getLogger(SmokeTest.class);
 
 
-	@Test
+	@Test(priority=1)
 	public void getAE() throws IOException{
 		//System.out.println("started GE");
-		PropertyConfigurator.configure("log4j.properties");
+		PropertyConfigurator.configure("./log4j.properties");
 		logger.info("Starting Get Application Entity Information Test Case");
 
 		Config aeObj= new Config();
@@ -59,11 +59,13 @@ public class SmokeTest extends TcConstants{
 				logger.info("NodeLinkMatched:"+nodelinkPresent);
 				logger.info("Response from the DAV:"+actualResult);
 				logger.info("***************************Get Application Entity Information Test Case Passed and Ended************************");
+				logger.debug("\n");
 				Assert.assertEquals(nodelinkPresent, true);
 				
 			}
 			else if (resp.statusCode()==UNAUTHORIZED){
 				logger.info("Testcase Failed And Ended:DAV not Reachable-Unauthorized due to: Status Code"+ UNAUTHORIZED);
+				logger.debug("/n");
 				Assert.fail();
 			}
 			else if (resp.statusCode()==INTERNALSERVERERROR){
@@ -82,10 +84,10 @@ public class SmokeTest extends TcConstants{
 
 	}
 
-	@Test
+	@Test(priority=2)
 	public void createGroup()throws IOException, InvalidFormatException{
-		PropertyConfigurator.configure("log4j.properties");
-		logger.info("Starting Create Group Test Case");
+		PropertyConfigurator.configure("./log4j.properties");
+		logger.info("\nStarting Create Group Test Case");
 		Config cgOBJ = new Config();
 		logger.info("Constructing Post URL");
 		String URL = cgOBJ.getBaseUri()+cgOBJ.getPort()+cgOBJ.getBasepath();
@@ -152,11 +154,11 @@ public class SmokeTest extends TcConstants{
 
 
 
-	@Test
+	@Test(priority=3)
 	public void createContainer()throws IOException, InvalidFormatException{
 		PropertyConfigurator.configure("log4j.properties");
 
-		logger.info("Starting Create Container Test Case");
+		logger.info("\nStarting Create Container Test Case");
 		Config ccOBJ = new Config();
 		logger.info("Constructing Post URL");
 		String URL = ccOBJ.getBaseUri()+ccOBJ.getPort()+ccOBJ.getBasepath()+ccOBJ.getAsset();
@@ -214,10 +216,10 @@ public class SmokeTest extends TcConstants{
 
 	}
 
-	@Test(dependsOnMethods  ={"createContainer"})
+	@Test(priority=4)
 	public void getContainerData() throws IOException, InvalidFormatException{
 		PropertyConfigurator.configure("log4j.properties");
-		logger.info("Starting Get Application Entity Conatiner data Test Case");
+		logger.info("\nStarting Get Application Entity Conatiner data Test Case");
 
 		Config cdObj= new Config();
 		TestData tdOBJ = new TestData();
@@ -269,10 +271,10 @@ public class SmokeTest extends TcConstants{
 
 	}
 
-	@Test
+	@Test(priority=5)
 	public void createSubscriptionGroup() throws IOException, InvalidFormatException, SQLException{
 		PropertyConfigurator.configure("log4j.properties");
-		logger.info("Starting Create Subcription for a group  Test Case");
+		logger.info("\nStarting Create Subcription for a group  Test Case");
 		Config csObj= new Config();
 		TestData tdOBJ = new TestData();
 		logger.info("Constructing URL for the request");
@@ -314,7 +316,7 @@ public class SmokeTest extends TcConstants{
 					}
 
 					else{
-						logger.info(actual);
+						logger.error(actual);
 					}
 				}			
 			}
@@ -338,10 +340,10 @@ public class SmokeTest extends TcConstants{
 	}
 	
 	
-	@Test
+	@Test(priority=6)
 	public void createSubscriptionAE() throws IOException, InvalidFormatException, SQLException{
 		PropertyConfigurator.configure("log4j.properties");
-		logger.info("Starting Create Subcription for AE  Test Case");
+		logger.info("\nStarting Create Subcription for AE  Test Case");
 		Config csObj= new Config();
 		TestData tdOBJ = new TestData();
 		logger.info("Constructing URL for the regquest");
@@ -383,7 +385,8 @@ public class SmokeTest extends TcConstants{
 					}
 
 					else{
-						logger.info(actual);
+						logger.error(actual);
+
 					}
 				}			
 			}
@@ -407,10 +410,10 @@ public class SmokeTest extends TcConstants{
 	}
 	
 	
-	@Test(dependsOnMethods  ={"createContainer"})
+	@Test(priority=7)
 		public void createSubscriptionCNT() throws IOException, InvalidFormatException, SQLException{
 			PropertyConfigurator.configure("log4j.properties");
-			logger.info("Starting Create Subcription for AE's Conatiner  Test Case");
+			logger.info("\nStarting Create Subcription for AE's Conatiner  Test Case");
 			Config csObj= new Config();
 			TestData tdOBJ = new TestData();
 			logger.info("Constructing URL for the regquest");
@@ -452,7 +455,8 @@ public class SmokeTest extends TcConstants{
 						}
 
 						else{
-							logger.info(actual);
+							logger.error(actual);
+
 						}
 					}			
 				}

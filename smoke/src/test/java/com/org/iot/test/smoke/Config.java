@@ -22,7 +22,7 @@ public class Config{
 
 	public String getBaseUri() throws IOException{
 
-		fis= new FileInputStream(System.getProperty("user.dir")+"\\config.properties");
+		fis= new FileInputStream(".\\config.properties");
 		prop=new Properties();
 		prop.load(fis);
 		return prop.getProperty("baseuri");

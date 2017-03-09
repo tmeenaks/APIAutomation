@@ -22,7 +22,7 @@ public class Rand{
 	
 			
 	Random randomno = new Random();
-	int r= randomno.nextInt(100);
+	int r= randomno.nextInt(100-10)+10;
 
 	public void setRandomContainer() throws InvalidFormatException, IOException{
 		PropertyConfigurator.configure("log4j.properties");

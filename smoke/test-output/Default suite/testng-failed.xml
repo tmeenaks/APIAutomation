@@ -5,8 +5,8 @@
     <classes>
       <class name="com.org.iot.test.smoke.SmokeTest">
         <methods>
-          <include name="getContainerData"/>
-          <include name="createContainer"/>
+          <include name="createSubscriptionGroup"/>
+          <include name="createSubscriptionAE"/>
           <include name="createSubscriptionCNT"/>
         </methods>
       </class> <!-- com.org.iot.test.smoke.SmokeTest -->

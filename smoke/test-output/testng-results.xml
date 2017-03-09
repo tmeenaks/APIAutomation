@@ -2,39 +2,39 @@
 <testng-results skipped="0" failed="0" ignored="0" total="7" passed="7">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="4805" started-at="2017-03-08T13:12:27Z" finished-at="2017-03-08T13:12:32Z">
+  <suite name="Default suite" duration-ms="6040" started-at="2017-03-09T13:46:44Z" finished-at="2017-03-09T13:46:50Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="4805" started-at="2017-03-08T13:12:27Z" finished-at="2017-03-08T13:12:32Z">
+    <test name="Default test" duration-ms="6040" started-at="2017-03-09T13:46:44Z" finished-at="2017-03-09T13:46:50Z">
       <class name="com.org.iot.test.smoke.SmokeTest">
-        <test-method status="PASS" signature="createContainer()[pri:0, instance:com.org.iot.test.smoke.SmokeTest@57fffcd7]" name="createContainer" duration-ms="2864" started-at="2017-03-08T18:42:27Z" finished-at="2017-03-08T18:42:30Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- createContainer -->
-        <test-method status="PASS" signature="createGroup()[pri:0, instance:com.org.iot.test.smoke.SmokeTest@57fffcd7]" name="createGroup" duration-ms="299" started-at="2017-03-08T18:42:30Z" finished-at="2017-03-08T18:42:31Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- createGroup -->
-        <test-method status="PASS" signature="createSubscriptionAE()[pri:0, instance:com.org.iot.test.smoke.SmokeTest@57fffcd7]" name="createSubscriptionAE" duration-ms="379" started-at="2017-03-08T18:42:31Z" finished-at="2017-03-08T18:42:31Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- createSubscriptionAE -->
-        <test-method status="PASS" signature="createSubscriptionGroup()[pri:0, instance:com.org.iot.test.smoke.SmokeTest@57fffcd7]" name="createSubscriptionGroup" duration-ms="345" started-at="2017-03-08T18:42:31Z" finished-at="2017-03-08T18:42:31Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- createSubscriptionGroup -->
-        <test-method status="PASS" signature="getAE()[pri:0, instance:com.org.iot.test.smoke.SmokeTest@57fffcd7]" name="getAE" duration-ms="331" started-at="2017-03-08T18:42:31Z" finished-at="2017-03-08T18:42:32Z">
+        <test-method status="PASS" signature="getAE()[pri:1, instance:com.org.iot.test.smoke.SmokeTest@57fffcd7]" name="getAE" duration-ms="2455" started-at="2017-03-09T19:16:44Z" finished-at="2017-03-09T19:16:47Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- getAE -->
-        <test-method status="PASS" signature="createSubscriptionCNT()[pri:0, instance:com.org.iot.test.smoke.SmokeTest@57fffcd7]" name="createSubscriptionCNT" duration-ms="394" started-at="2017-03-08T18:42:32Z" depends-on-methods="com.org.iot.test.smoke.SmokeTest.createContainer" finished-at="2017-03-08T18:42:32Z">
+        <test-method status="PASS" signature="createGroup()[pri:2, instance:com.org.iot.test.smoke.SmokeTest@57fffcd7]" name="createGroup" duration-ms="1014" started-at="2017-03-09T19:16:47Z" finished-at="2017-03-09T19:16:48Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- createSubscriptionCNT -->
-        <test-method status="PASS" signature="getContainerData()[pri:0, instance:com.org.iot.test.smoke.SmokeTest@57fffcd7]" name="getContainerData" duration-ms="140" started-at="2017-03-08T18:42:32Z" depends-on-methods="com.org.iot.test.smoke.SmokeTest.createContainer" finished-at="2017-03-08T18:42:32Z">
+        </test-method> <!-- createGroup -->
+        <test-method status="PASS" signature="createContainer()[pri:3, instance:com.org.iot.test.smoke.SmokeTest@57fffcd7]" name="createContainer" duration-ms="1063" started-at="2017-03-09T19:16:48Z" finished-at="2017-03-09T19:16:49Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createContainer -->
+        <test-method status="PASS" signature="getContainerData()[pri:4, instance:com.org.iot.test.smoke.SmokeTest@57fffcd7]" name="getContainerData" duration-ms="265" started-at="2017-03-09T19:16:49Z" finished-at="2017-03-09T19:16:49Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- getContainerData -->
+        <test-method status="PASS" signature="createSubscriptionGroup()[pri:5, instance:com.org.iot.test.smoke.SmokeTest@57fffcd7]" name="createSubscriptionGroup" duration-ms="663" started-at="2017-03-09T19:16:49Z" finished-at="2017-03-09T19:16:50Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createSubscriptionGroup -->
+        <test-method status="PASS" signature="createSubscriptionAE()[pri:6, instance:com.org.iot.test.smoke.SmokeTest@57fffcd7]" name="createSubscriptionAE" duration-ms="282" started-at="2017-03-09T19:16:50Z" finished-at="2017-03-09T19:16:50Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createSubscriptionAE -->
+        <test-method status="PASS" signature="createSubscriptionCNT()[pri:7, instance:com.org.iot.test.smoke.SmokeTest@57fffcd7]" name="createSubscriptionCNT" duration-ms="250" started-at="2017-03-09T19:16:50Z" finished-at="2017-03-09T19:16:50Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createSubscriptionCNT -->
       </class> <!-- com.org.iot.test.smoke.SmokeTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
