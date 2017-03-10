@@ -17,5 +17,7 @@ public class TcConstants {
 	protected static final int NOTFOUND=404;
 	protected static final int CREATED=201;
 	protected static final String SUBSCRIPTION="subscription";
+	protected static final String AE="application_entity";
+	
 	
 }

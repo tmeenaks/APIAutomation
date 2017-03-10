@@ -35,7 +35,7 @@ public class SmokeTest extends TcConstants{
 		Config aeObj= new Config();
 		logger.info("Getting Node Link Pattern from the Config");
 		String nodelinkPattern= aeObj.getNodelink();	
-		String URL = aeObj.getBaseUri()+aeObj.getPort()+aeObj.getBasepath()+aeObj.getAsset();
+		String URL = aeObj.getBaseUri()+aeObj.getPort()+aeObj.getBasepath()+"/"+aeObj.getAsset();
 		logger.info("Node Link Pattern fetched"+nodelinkPattern);
 		logger.info("Generating Headers and parameters");
 		try{
@@ -161,7 +161,7 @@ public class SmokeTest extends TcConstants{
 		logger.info("\nStarting Create Container Test Case");
 		Config ccOBJ = new Config();
 		logger.info("Constructing Post URL");
-		String URL = ccOBJ.getBaseUri()+ccOBJ.getPort()+ccOBJ.getBasepath()+ccOBJ.getAsset();
+		String URL = ccOBJ.getBaseUri()+ccOBJ.getPort()+ccOBJ.getBasepath()+"/"+ccOBJ.getAsset();
 		logger.info("Constructed URL for the Post Request :"+URL);
 		TestData td = new TestData();
 		logger.info("Generating headres and parameters");
@@ -224,7 +224,7 @@ public class SmokeTest extends TcConstants{
 		Config cdObj= new Config();
 		TestData tdOBJ = new TestData();
 		logger.info("Constructing URL for the regquest");
-		String URL = cdObj.getBaseUri()+cdObj.getPort()+cdObj.getBasepath()+cdObj.getAsset()+"/"+tdOBJ.getContainerName();
+		String URL = cdObj.getBaseUri()+cdObj.getPort()+cdObj.getBasepath()+"/"+cdObj.getAsset()+"/"+tdOBJ.getContainerName();
 		logger.info("Constructed URL for the request:\t"+URL);
 		logger.info("Generating Headers and parameters");
 		try{
@@ -316,7 +316,7 @@ public class SmokeTest extends TcConstants{
 					}
 
 					else{
-						logger.error(actual);
+						logger.debug(actual);
 					}
 				}			
 			}
@@ -347,7 +347,7 @@ public class SmokeTest extends TcConstants{
 		Config csObj= new Config();
 		TestData tdOBJ = new TestData();
 		logger.info("Constructing URL for the regquest");
-		String URL = csObj.getBaseUri()+csObj.getPort()+csObj.getBasepath()+csObj.getAsset();
+		String URL = csObj.getBaseUri()+csObj.getPort()+csObj.getBasepath()+"/"+csObj.getAsset();
 		logger.info("Constructed URL for the request:\t"+URL);
 		logger.info("Generating Headers and parameters");
 		try{
@@ -385,7 +385,7 @@ public class SmokeTest extends TcConstants{
 					}
 
 					else{
-						logger.error(actual);
+						logger.debug(actual);
 
 					}
 				}			
@@ -417,7 +417,7 @@ public class SmokeTest extends TcConstants{
 			Config csObj= new Config();
 			TestData tdOBJ = new TestData();
 			logger.info("Constructing URL for the regquest");
-			String URL = csObj.getBaseUri()+csObj.getPort()+csObj.getBasepath()+csObj.getAsset()+"/"+tdOBJ.getContainerName();
+			String URL = csObj.getBaseUri()+csObj.getPort()+csObj.getBasepath()+"/"+csObj.getAsset()+"/"+tdOBJ.getContainerName();
 			logger.info("Constructed URL for the request:\t"+URL);
 			logger.info("Generating Headers and parameters");
 			try{
@@ -455,7 +455,7 @@ public class SmokeTest extends TcConstants{
 						}
 
 						else{
-							logger.error(actual);
+							logger.debug(actual);
 
 						}
 					}			
@@ -478,4 +478,74 @@ public class SmokeTest extends TcConstants{
 			}
 
 		}
+	
+	
+	@Test(priority=8)
+	public void updateAE() throws IOException, InvalidFormatException, SQLException{
+		PropertyConfigurator.configure("log4j.properties");
+		logger.info("\nStarting Update AE data  Test Case");
+		Config aeObj= new Config();
+		TestData tdOBJ = new TestData();
+		logger.info("Constructing URL for the request");
+		String URL = aeObj.getBaseUri()+aeObj.getPort()+aeObj.getBasepath()+"/"+aeObj.getAsset();
+		logger.info("Constructed URL for the request:\t"+URL);
+		logger.info("Generating Headers and parameters");
+		try{
+			Rand ranObj = new Rand();
+			ranObj.setRandomAE_UPDATE_DATA();;
+			Response resp1=with().log().all().
+					header("X-M2M-Origin", aeObj.getOrigin()).
+					header("Authorization", aeObj.getAuthorization()).
+					header("X-M2M-RI",aeObj.randomRI()).
+					header("Content-Type",aeObj.getContentype_SUBS()).
+					given().
+					body(tdOBJ.getupdateAEBody()).
+					when().
+					put(URL);
+
+			logger.info("Status Code received from Server"+resp1.statusCode());
+			if(resp1.statusCode()==SUCCESSOK){
+				logger.info("****************DAV Hit Label updated created**********************");
+				logger.info("Performing Database validation for the Update AE data");
+				Datasource ds = new Datasource(aeObj.getdbLogin(),aeObj.getdbpassword(),aeObj.getdbName(),aeObj.getdbHost(),aeObj.getdbPort(),aeObj.getconnectionURL()); 
+				String assetname= aeObj.getAsset();
+				logger.info("Asset Name is the filter selection in the Database:\t"+assetname);
+				ResultSet res = ds.Query("Select * from\t" +AE+" where resource_name=\t"+"'"+assetname+"'");
+				String expectedLAB= "[\""+tdOBJ.getAEUpdatelabel()+"\"]";
+				logger.info("Label Expected in the DataBase:\t"+expectedLAB);
+				while(res.next()){
+
+					String actual=res.getString("labels");
+					//logger.info(actual);
+
+					if(actual.equals(expectedLAB)){
+						logger.info("Label: \t" + actual + "\tFound in DAV");
+						logger.info("Testcase Passed and Ended");
+						Assert.assertEquals(actual,expectedLAB);
+					}
+
+					else{
+						logger.debug(actual);
+
+					}
+				}			
+			}
+			else if (resp1.statusCode()==UNAUTHORIZED){
+				logger.info("TestCase failed and Ended due to DAV not Reachable-Unauthorized due to: Status Code"+ UNAUTHORIZED);
+				Assert.fail();
+			}
+			else if (resp1.statusCode()==INTERNALSERVERERROR){
+				logger.info("TestCase failed and Ended due DAV  Reachable but Server not able to process due to: Status Code:"+ INTERNALSERVERERROR);
+				Assert.fail();
+			}
+			else{
+				logger.info("TestCase failed and Ended due Check the Request and Script");
+				Assert.fail();
+			}
+		}catch(ConnectException e){
+			logger.error("TestCase failed and Ended due Error in Connection:" +e);
+			Assert.fail();
+		}
+
+	}
 }

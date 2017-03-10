@@ -185,4 +185,36 @@ public class Rand{
 		workbook.write(outputStream);
 		outputStream.close();
 }
+	
+	public void setRandomAE_UPDATE_DATA() throws InvalidFormatException, IOException{
+		PropertyConfigurator.configure("log4j.properties");
+		logger.info("Setting Random AE Update data method called");
+		String s=tdobj.getupdateAEBody();
+		logger.info("Create AE Update Body Fetched from the dataSheet:\t"+s);
+		int startIndex = s.indexOf("_");
+		logger.info("startindex"+startIndex);
+		int endIndex = s.indexOf("]");
+		logger.info("endindex"+endIndex);
+		String rand= Integer.toString(r);
+		logger.info("Random Number Generated:\t"+rand);
+		String set=s.replace(s.substring(startIndex+1, endIndex-1), rand);
+		logger.info("Replaced Update Label Name:\t"+set);
+		logger.info("Storing the Update Label name for further Refernces");
+		String updatelabelName=set.substring(startIndex-6, endIndex-1).trim();
+		logger.info(updatelabelName);
+		FileInputStream fis1= new FileInputStream(FilePath);
+		org.apache.poi.ss.usermodel.Workbook workbook;	
+		workbook = WorkbookFactory.create(fis1);
+		org.apache.poi.ss.usermodel.Sheet sheet = workbook.getSheetAt(5);
+		Row row = sheet.getRow(0);
+		org.apache.poi.ss.usermodel.Cell cell = row.getCell(1);
+		cell.setCellValue(set);
+		Row row1 = sheet.getRow(1);
+		org.apache.poi.ss.usermodel.Cell cell1 = row1.getCell(1);
+		cell1.setCellValue(updatelabelName);
+		FileOutputStream outputStream = new FileOutputStream(new File(FilePath));
+		outputStream.flush();
+		workbook.write(outputStream);
+		outputStream.close();
+}
 }
