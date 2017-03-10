@@ -249,11 +249,40 @@ public class TestData {
 			org.apache.poi.ss.usermodel.Sheet sheet = workbook.getSheetAt(5);
 			Row row = sheet.getRow(1);
 			org.apache.poi.ss.usermodel.Cell cell = row.getCell(1);
-			String getupdateLabel = cell.toString();
-			return getupdateLabel;		
+			String getupdateLabelAE = cell.toString();
+			return getupdateLabelAE;		
 
 		}	
 
+		public String getupdateCNTBody() throws IOException, InvalidFormatException{
+
+			FileInputStream fis1= new FileInputStream(FilePath);
+			//XSSFWorkbook wb1 = new XSSFWorkbook(fis1);
+			//XSSFSheet sh1= wb1.getSheet("creategroup");
+			org.apache.poi.ss.usermodel.Workbook workbook;	
+			workbook = WorkbookFactory.create(fis1);
+			org.apache.poi.ss.usermodel.Sheet sheet = workbook.getSheetAt(6);
+			Row row = sheet.getRow(0);
+			org.apache.poi.ss.usermodel.Cell cell = row.getCell(1);
+			String updateCNTBody = cell.toString();
+			return updateCNTBody;		
+}
+		
+		public String getCNTUpdatelabel() throws IOException, InvalidFormatException{
+
+			FileInputStream fis1= new FileInputStream(FilePath);
+			//XSSFWorkbook wb1 = new XSSFWorkbook(fis1);
+			//XSSFSheet sh1= wb1.getSheet("creategroup");
+			org.apache.poi.ss.usermodel.Workbook workbook;	
+			workbook = WorkbookFactory.create(fis1);
+			org.apache.poi.ss.usermodel.Sheet sheet = workbook.getSheetAt(6);
+			Row row = sheet.getRow(1);
+			org.apache.poi.ss.usermodel.Cell cell = row.getCell(1);
+			String getupdateLabelCNT = cell.toString();
+			return getupdateLabelCNT;		
+
+		}	
+		
 }
 
 

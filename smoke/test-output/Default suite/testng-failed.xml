@@ -5,7 +5,7 @@
     <classes>
       <class name="com.org.iot.test.smoke.SmokeTest">
         <methods>
-          <include name="createGroup"/>
+          <include name="updateCNT"/>
         </methods>
       </class> <!-- com.org.iot.test.smoke.SmokeTest -->
     </classes>

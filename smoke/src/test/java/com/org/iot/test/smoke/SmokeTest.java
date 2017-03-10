@@ -26,7 +26,7 @@ public class SmokeTest extends TcConstants{
 	final static Logger logger = Logger.getLogger(SmokeTest.class);
 
 
-	@Test(priority=1)
+	@Test(priority=1, description="Validate whether the application is able to access AE information")
 	public void getAE() throws IOException{
 		//System.out.println("started GE");
 		PropertyConfigurator.configure("./log4j.properties");
@@ -61,7 +61,7 @@ public class SmokeTest extends TcConstants{
 				logger.info("***************************Get Application Entity Information Test Case Passed and Ended************************");
 				logger.debug("\n");
 				Assert.assertEquals(nodelinkPresent, true);
-				
+
 			}
 			else if (resp.statusCode()==UNAUTHORIZED){
 				logger.info("Testcase Failed And Ended:DAV not Reachable-Unauthorized due to: Status Code"+ UNAUTHORIZED);
@@ -84,7 +84,7 @@ public class SmokeTest extends TcConstants{
 
 	}
 
-	@Test(priority=2)
+	@Test(priority=2, description="Validate whether a device group can be created")
 	public void createGroup()throws IOException, InvalidFormatException{
 		PropertyConfigurator.configure("./log4j.properties");
 		logger.info("\nStarting Create Group Test Case");
@@ -154,7 +154,7 @@ public class SmokeTest extends TcConstants{
 
 
 
-	@Test(priority=3)
+	@Test(priority=3, description="Validate Whether Application can able to create Container for device")
 	public void createContainer()throws IOException, InvalidFormatException{
 		PropertyConfigurator.configure("log4j.properties");
 
@@ -216,7 +216,7 @@ public class SmokeTest extends TcConstants{
 
 	}
 
-	@Test(priority=4)
+	@Test(priority=4, description="Validate whether the application is able to access the AE's container data")
 	public void getContainerData() throws IOException, InvalidFormatException{
 		PropertyConfigurator.configure("log4j.properties");
 		logger.info("\nStarting Get Application Entity Conatiner data Test Case");
@@ -271,7 +271,7 @@ public class SmokeTest extends TcConstants{
 
 	}
 
-	@Test(priority=5)
+	@Test(priority=5, description="Validate whether the application is able to create subscription for a group")
 	public void createSubscriptionGroup() throws IOException, InvalidFormatException, SQLException{
 		PropertyConfigurator.configure("log4j.properties");
 		logger.info("\nStarting Create Subcription for a group  Test Case");
@@ -338,9 +338,9 @@ public class SmokeTest extends TcConstants{
 		}
 
 	}
-	
-	
-	@Test(priority=6)
+
+
+	@Test(priority=6, description="Validate whether the application is able to create subscription for AE")
 	public void createSubscriptionAE() throws IOException, InvalidFormatException, SQLException{
 		PropertyConfigurator.configure("log4j.properties");
 		logger.info("\nStarting Create Subcription for AE  Test Case");
@@ -408,79 +408,79 @@ public class SmokeTest extends TcConstants{
 		}
 
 	}
-	
-	
-	@Test(priority=7)
-		public void createSubscriptionCNT() throws IOException, InvalidFormatException, SQLException{
-			PropertyConfigurator.configure("log4j.properties");
-			logger.info("\nStarting Create Subcription for AE's Conatiner  Test Case");
-			Config csObj= new Config();
-			TestData tdOBJ = new TestData();
-			logger.info("Constructing URL for the regquest");
-			String URL = csObj.getBaseUri()+csObj.getPort()+csObj.getBasepath()+"/"+csObj.getAsset()+"/"+tdOBJ.getContainerName();
-			logger.info("Constructed URL for the request:\t"+URL);
-			logger.info("Generating Headers and parameters");
-			try{
-				Rand ranObj = new Rand();
-				ranObj.setRandomSubscription_CNT();
-				Response resp1=with().log().all().
-						header("X-M2M-Origin", csObj.getOrigin()).
-						header("Authorization", csObj.getAuthorization()).
-						header("X-M2M-RI",csObj.randomRI()).
-						header("Content-Type",csObj.getContentype_SUBS()).
-						given().
-						body(tdOBJ.getsubscreateBody_CNT()).
-						when().
-						post(URL);
 
-				logger.info("Status Code received from Server"+resp1.statusCode());
-				if(resp1.statusCode()==CREATED){
-					logger.info("****************DAV Hit Subscription created**********************");
-					logger.info("Performing Database validation for the Subscription");
-					Datasource ds = new Datasource(csObj.getdbLogin(),csObj.getdbpassword(),csObj.getdbName(),csObj.getdbHost(),csObj.getdbPort(),csObj.getconnectionURL()); 
-					String creator= csObj.getOrigin();
-					logger.info("Creator is the filter selection in the Database:\t"+creator);
-					ResultSet res = ds.Query("Select * from\t" +SUBSCRIPTION+" where creator=\t"+"'"+creator+"'");
-					String expectedSUB= tdOBJ.getSubscriptionName_CNT();
-					logger.info("Subscription Name Expected in the DataBase:\t"+expectedSUB);
-					while(res.next()){
 
-						String actual=res.getString("resource_name");
-						//logger.info(actual);
+	@Test(priority=7, description="Validate whether the application is able to create subscription for AE's container")
+	public void createSubscriptionCNT() throws IOException, InvalidFormatException, SQLException{
+		PropertyConfigurator.configure("log4j.properties");
+		logger.info("\nStarting Create Subcription for AE's Conatiner  Test Case");
+		Config csObj= new Config();
+		TestData tdOBJ = new TestData();
+		logger.info("Constructing URL for the regquest");
+		String URL = csObj.getBaseUri()+csObj.getPort()+csObj.getBasepath()+"/"+csObj.getAsset()+"/"+tdOBJ.getContainerName();
+		logger.info("Constructed URL for the request:\t"+URL);
+		logger.info("Generating Headers and parameters");
+		try{
+			Rand ranObj = new Rand();
+			ranObj.setRandomSubscription_CNT();
+			Response resp1=with().log().all().
+					header("X-M2M-Origin", csObj.getOrigin()).
+					header("Authorization", csObj.getAuthorization()).
+					header("X-M2M-RI",csObj.randomRI()).
+					header("Content-Type",csObj.getContentype_SUBS()).
+					given().
+					body(tdOBJ.getsubscreateBody_CNT()).
+					when().
+					post(URL);
 
-						if(actual.equals(expectedSUB)){
-							logger.info("Subscription Name: \t" + actual + "\tFound in DAV");
-							logger.info("Testcase Passed and Ended");
-							Assert.assertEquals(actual,expectedSUB);
-						}
+			logger.info("Status Code received from Server"+resp1.statusCode());
+			if(resp1.statusCode()==CREATED){
+				logger.info("****************DAV Hit Subscription created**********************");
+				logger.info("Performing Database validation for the Subscription");
+				Datasource ds = new Datasource(csObj.getdbLogin(),csObj.getdbpassword(),csObj.getdbName(),csObj.getdbHost(),csObj.getdbPort(),csObj.getconnectionURL()); 
+				String creator= csObj.getOrigin();
+				logger.info("Creator is the filter selection in the Database:\t"+creator);
+				ResultSet res = ds.Query("Select * from\t" +SUBSCRIPTION+" where creator=\t"+"'"+creator+"'");
+				String expectedSUB= tdOBJ.getSubscriptionName_CNT();
+				logger.info("Subscription Name Expected in the DataBase:\t"+expectedSUB);
+				while(res.next()){
 
-						else{
-							logger.debug(actual);
+					String actual=res.getString("resource_name");
+					//logger.info(actual);
 
-						}
-					}			
-				}
-				else if (resp1.statusCode()==UNAUTHORIZED){
-					logger.info("TestCase failed and Ended due to DAV not Reachable-Unauthorized due to: Status Code"+ UNAUTHORIZED);
-					Assert.fail();
-				}
-				else if (resp1.statusCode()==INTERNALSERVERERROR){
-					logger.info("TestCase failed and Ended due DAV  Reachable but Server not able to process due to: Status Code:"+ INTERNALSERVERERROR);
-					Assert.fail();
-				}
-				else{
-					logger.info("TestCase failed and Ended due Check the Request and Script");
-					Assert.fail();
-				}
-			}catch(ConnectException e){
-				logger.error("TestCase failed and Ended due Error in Connection:" +e);
+					if(actual.equals(expectedSUB)){
+						logger.info("Subscription Name: \t" + actual + "\tFound in DAV");
+						logger.info("Testcase Passed and Ended");
+						Assert.assertEquals(actual,expectedSUB);
+					}
+
+					else{
+						logger.debug(actual);
+
+					}
+				}			
+			}
+			else if (resp1.statusCode()==UNAUTHORIZED){
+				logger.info("TestCase failed and Ended due to DAV not Reachable-Unauthorized due to: Status Code"+ UNAUTHORIZED);
 				Assert.fail();
 			}
-
+			else if (resp1.statusCode()==INTERNALSERVERERROR){
+				logger.info("TestCase failed and Ended due DAV  Reachable but Server not able to process due to: Status Code:"+ INTERNALSERVERERROR);
+				Assert.fail();
+			}
+			else{
+				logger.info("TestCase failed and Ended due Check the Request and Script");
+				Assert.fail();
+			}
+		}catch(ConnectException e){
+			logger.error("TestCase failed and Ended due Error in Connection:" +e);
+			Assert.fail();
 		}
-	
-	
-	@Test(priority=8)
+
+	}
+
+
+	@Test(priority=8, description="Validate whether the application is able to update the AE data")
 	public void updateAE() throws IOException, InvalidFormatException, SQLException{
 		PropertyConfigurator.configure("log4j.properties");
 		logger.info("\nStarting Update AE data  Test Case");
@@ -497,7 +497,7 @@ public class SmokeTest extends TcConstants{
 					header("X-M2M-Origin", aeObj.getOrigin()).
 					header("Authorization", aeObj.getAuthorization()).
 					header("X-M2M-RI",aeObj.randomRI()).
-					header("Content-Type",aeObj.getContentype_SUBS()).
+					header("Content-Type",aeObj.getContentype_AE()).
 					given().
 					body(tdOBJ.getupdateAEBody()).
 					when().
@@ -548,4 +548,73 @@ public class SmokeTest extends TcConstants{
 		}
 
 	}
+	
+	@Test(priority=9, description="Validate whetehr the application is able to update the AE's container data")
+		public void updateCNT() throws IOException, InvalidFormatException, SQLException{
+			PropertyConfigurator.configure("log4j.properties");
+			logger.info("\nStarting Update Container data  Test Case");
+			Config cnObj= new Config();
+			TestData tdOBJ = new TestData();
+			logger.info("Constructing URL for the request");
+			String URL = cnObj.getBaseUri()+cnObj.getPort()+cnObj.getBasepath()+"/"+cnObj.getAsset()+"/"+tdOBJ.getContainerName();
+			logger.info("Constructed URL for the request:\t"+URL);
+			logger.info("Generating Headers and parameters");
+			try{
+				Rand ranObj = new Rand();
+				ranObj.setRandomCNT_UPDATE_DATA();
+				Response resp1=with().log().all().
+						header("X-M2M-Origin", cnObj.getOrigin()).
+						header("Authorization", cnObj.getAuthorization()).
+						header("X-M2M-RI",cnObj.randomRI()).
+						header("Content-Type",cnObj.getContentype_CNT()).
+						given().
+						body(tdOBJ.getupdateCNTBody()).
+						when().
+						put(URL);
+
+				logger.info("Status Code received from Server"+resp1.statusCode());
+				if(resp1.statusCode()==SUCCESSOK){
+					logger.info("****************DAV Hit Label updated created**********************");
+					logger.info("Performing Database validation for the Update Container data");
+					Datasource ds = new Datasource(cnObj.getdbLogin(),cnObj.getdbpassword(),cnObj.getdbName(),cnObj.getdbHost(),cnObj.getdbPort(),cnObj.getconnectionURL()); 
+					String resourcename= tdOBJ.getContainerName();
+					logger.info("Container-Resource Name is the filter selection in the Database:\t"+resourcename);
+					ResultSet res = ds.Query("Select * from\t" +CONTAINER+" where resource_name=\t"+"'"+resourcename+"'");
+					String expectedLAB= "[\""+tdOBJ.getCNTUpdatelabel()+"\"]";
+					logger.info("Label Expected in the DataBase:\t"+expectedLAB);
+					while(res.next()){
+
+						String actual=res.getString("labels");
+						//logger.info(actual);
+
+						if(actual.equals(expectedLAB)){
+							logger.info("Label: \t" + actual + "\tFound in DAV");
+							logger.info("Testcase Passed and Ended");
+							Assert.assertEquals(actual,expectedLAB);
+						}
+
+						else{
+							logger.debug(actual);
+
+						}
+					}			
+				}
+				else if (resp1.statusCode()==UNAUTHORIZED){
+					logger.info("TestCase failed and Ended due to DAV not Reachable-Unauthorized due to: Status Code"+ UNAUTHORIZED);
+					Assert.fail();
+				}
+				else if (resp1.statusCode()==INTERNALSERVERERROR){
+					logger.info("TestCase failed and Ended due DAV  Reachable but Server not able to process due to: Status Code:"+ INTERNALSERVERERROR);
+					Assert.fail();
+				}
+				else{
+					logger.info("TestCase failed and Ended due Check the Request and Script");
+					Assert.fail();
+				}
+			}catch(ConnectException e){
+				logger.error("TestCase failed and Ended due Error in Connection:" +e);
+				Assert.fail();
+			}
+
+		}
 }
